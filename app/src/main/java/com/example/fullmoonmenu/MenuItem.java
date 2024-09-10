@@ -1,8 +1,9 @@
 package com.example.fullmoonmenu;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MenuItem {
+public class MenuItem implements Serializable {
     private int id;
     private boolean isFood;
     private String name;

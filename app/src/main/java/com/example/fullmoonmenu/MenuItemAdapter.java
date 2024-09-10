@@ -1,6 +1,7 @@
 package com.example.fullmoonmenu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
@@ -40,6 +42,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         holder.addToCartButton.setOnClickListener(v -> {
             shoppingCart.addItem(menuItem);
             // Optionally show a message or update UI
+        });
+
+        holder.itemImage.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra("menuItem", (Serializable) menuItem);
+            context.startActivity(intent);
         });
     }
 
