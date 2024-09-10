@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
     private MenuItemAdapter adapter;
+    private List<com.example.fullmoonmenu.MenuItem> menuItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // Ensure this references the correct layout resource
+        recyclerView = findViewById(R.id.recyclerView);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // Set GridLayoutManager with 2 columns
+        int spanCount = MenuItemAdapter.calculateSpanCount(this);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
         adapter = new MenuItemAdapter(new ArrayList<>(), shoppingCart, this);
         recyclerView.setAdapter(adapter);
 
@@ -94,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
             fetchAndDisplayMenuItems();
             return true;
         }
+        if (id == R.id.action_admin_page) {
+            Intent intent = new Intent(MainActivity.this, AdminLoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

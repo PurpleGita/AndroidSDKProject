@@ -3,6 +3,7 @@ package com.example.fullmoonmenu;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,5 +75,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public void updateMenuItems(List<MenuItem> menuItems) {
         this.menuItems = menuItems;
         notifyDataSetChanged();
+    }
+
+    public static int calculateSpanCount(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+        int itemWidthDp = 180; // Assume each item is 180dp wide
+        return Math.max(2, (int) (screenWidthDp / itemWidthDp));
     }
 }

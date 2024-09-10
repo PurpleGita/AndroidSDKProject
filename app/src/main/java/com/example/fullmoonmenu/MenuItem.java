@@ -12,9 +12,9 @@ public class MenuItem implements Serializable {
     private byte[] image;
     private String taste;
     private String effect;
-    private List<Object> additionalInfo;
+    private List<Object> allergies;
 
-    public MenuItem(int id, boolean isFood, String name, int price, String currency, byte[] image, String taste, String effect, List<Object> additionalInfo) {
+    public MenuItem(int id, boolean isFood, String name, int price, String currency, byte[] image, String taste, String effect, List<Object> allergies) {
         this.id = id;
         this.isFood = isFood;
         this.name = name;
@@ -23,7 +23,7 @@ public class MenuItem implements Serializable {
         this.image = image;
         this.taste = taste;
         this.effect = effect;
-        this.additionalInfo = additionalInfo;
+        this.allergies = allergies;
     }
 
     public int getId() {
@@ -58,8 +58,8 @@ public class MenuItem implements Serializable {
         return effect;
     }
 
-    public List<Object> getAdditionalInfo() {
-        return additionalInfo;
+    public List<Object> getAllergies() {
+        return allergies;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MenuItem implements Serializable {
         if (!java.util.Arrays.equals(image, menuItem.image)) return false;
         if (!taste.equals(menuItem.taste)) return false;
         if (!effect.equals(menuItem.effect)) return false;
-        return additionalInfo.equals(menuItem.additionalInfo);
+        return allergies.equals(menuItem.allergies);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class MenuItem implements Serializable {
         result = 31 * result + java.util.Arrays.hashCode(image);
         result = 31 * result + taste.hashCode();
         result = 31 * result + effect.hashCode();
-        result = 31 * result + additionalInfo.hashCode();
+        result = 31 * result + allergies.hashCode();
         return result;
     }
 }

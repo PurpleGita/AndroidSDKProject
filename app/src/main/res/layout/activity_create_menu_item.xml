@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".CreateMenuItemActivity">
+
+        <CheckBox
+            android:id="@+id/isFoodCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is Food"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemNameEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Item Name"
+            app:layout_constraintTop_toBottomOf="@id/isFoodCheckBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemPriceEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Item Price"
+            app:layout_constraintTop_toBottomOf="@id/itemNameEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemCurrencyEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Item Currency"
+            app:layout_constraintTop_toBottomOf="@id/itemPriceEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemTasteEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Item Taste"
+            app:layout_constraintTop_toBottomOf="@id/itemCurrencyEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemEffectEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Item Effect"
+            app:layout_constraintTop_toBottomOf="@id/itemTasteEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/itemAllergiesEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="Allergies"
+            app:layout_constraintTop_toBottomOf="@id/itemEffectEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <ImageView
+            android:id="@+id/itemImageView"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:contentDescription="Item Image"
+            app:layout_constraintTop_toBottomOf="@id/itemAllergiesEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop" />
+
+        <Button
+            android:id="@+id/selectImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Image"
+            app:layout_constraintTop_toBottomOf="@id/itemImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <Button
+            android:id="@+id/createItemButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Item"
+            app:layout_constraintTop_toBottomOf="@id/selectImageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
