@@ -25,6 +25,34 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
+        android:id="@+id/showAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show All"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toEndOf="@id/showDrinksButton"
+        android:layout_margin="8dp" />
+
+    <Button
+        android:id="@+id/showFoodButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Food"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp" />
+
+    <Button
+        android:id="@+id/showDrinksButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Drinks"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toEndOf="@id/showFoodButton"
+        android:layout_margin="8dp" />
+
+
+    <Button
         android:id="@+id/viewCartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

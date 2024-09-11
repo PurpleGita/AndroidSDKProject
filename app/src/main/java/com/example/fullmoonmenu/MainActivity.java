@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button showFoodButton = findViewById(R.id.showFoodButton);
+        Button showDrinksButton = findViewById(R.id.showDrinksButton);
+        Button showAllButton = findViewById(R.id.showAllButton);
+
+        showFoodButton.setOnClickListener(v -> filterMenuItems(true));
+        showDrinksButton.setOnClickListener(v -> filterMenuItems(false));
+        showAllButton.setOnClickListener(v -> adapter.updateMenuItems(menuItemList));
+
         Log.d(TAG, "onCreate: Activity created");
     }
 
@@ -110,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 List<com.example.fullmoonmenu.MenuItem> menuItems = ApiClient.fetchMenuItems();
+                menuItemList = menuItems; // Store the fetched menu items
                 Log.d(TAG, "fetchAndDisplayMenuItems: Menu items fetched, count=" + menuItems.size());
                 runOnUiThread(() -> {
                     adapter.updateMenuItems(menuItems);
@@ -118,5 +128,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "fetchAndDisplayMenuItems: Error fetching menu items", e);
             }
         }).start();
+    }
+
+    private void filterMenuItems(boolean isFood) {
+        List<com.example.fullmoonmenu.MenuItem> filteredItems = menuItemList.stream()
+                .filter(menuItem -> menuItem.isFood() == isFood)
+                .collect(Collectors.toList());
+        adapter.updateMenuItems(filteredItems);
     }
 }
