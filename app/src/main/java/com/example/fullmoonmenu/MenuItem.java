@@ -1,9 +1,21 @@
 package com.example.fullmoonmenu;
 
+import android.util.Base64;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class MenuItem implements Serializable {
+    @PrimaryKey
     private int id;
     private boolean isFood;
     private String name;
@@ -62,35 +74,47 @@ public class MenuItem implements Serializable {
         return allergies;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        MenuItem menuItem = (MenuItem) o;
-
-        if (id != menuItem.id) return false;
-        if (isFood != menuItem.isFood) return false;
-        if (price != menuItem.price) return false;
-        if (!name.equals(menuItem.name)) return false;
-        if (!currency.equals(menuItem.currency)) return false;
-        if (!java.util.Arrays.equals(image, menuItem.image)) return false;
-        if (!taste.equals(menuItem.taste)) return false;
-        if (!effect.equals(menuItem.effect)) return false;
-        return allergies.equals(menuItem.allergies);
+    public String toJson() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", id);
+            jsonObject.put("isFood", isFood);
+            jsonObject.put("name", name);
+            jsonObject.put("price", price);
+            jsonObject.put("currency", currency);
+            jsonObject.put("image", Base64.encodeToString(image, Base64.DEFAULT));
+            jsonObject.put("taste", taste);
+            jsonObject.put("effect", effect);
+            JSONArray allergiesArray = new JSONArray(allergies);
+            jsonObject.put("allergies", allergiesArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (isFood ? 1 : 0);
-        result = 31 * result + name.hashCode();
-        result = 31 * result + price;
-        result = 31 * result + currency.hashCode();
-        result = 31 * result + java.util.Arrays.hashCode(image);
-        result = 31 * result + taste.hashCode();
-        result = 31 * result + effect.hashCode();
-        result = 31 * result + allergies.hashCode();
-        return result;
+    public static MenuItem fromJson(String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            int id = jsonObject.getInt("id");
+            boolean isFood = jsonObject.getBoolean("isFood");
+            String name = jsonObject.getString("name");
+            int price = jsonObject.getInt("price");
+            String currency = jsonObject.getString("currency");
+            byte[] image = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
+            String taste = jsonObject.getString("taste");
+            String effect = jsonObject.getString("effect");
+            String imageUri = jsonObject.getString("imageUri");
+            JSONArray allergiesArray = jsonObject.getJSONArray("allergies");
+            List<Object> allergies = new ArrayList<>();
+            for (int i = 0; i < allergiesArray.length(); i++) {
+                allergies.add(allergiesArray.get(i));
+            }
+            MenuItem menuItem = new MenuItem(id, isFood, name, price, currency, image, taste, effect, allergies);
+            return menuItem;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

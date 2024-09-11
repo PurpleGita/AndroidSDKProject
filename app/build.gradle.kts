@@ -39,7 +39,13 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
     implementation(libs.car.ui.lib)
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation(libs.room.common)
+    implementation(libs.room.runtime)
+    implementation(libs.databinding.adapters)
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    annotationProcessor(libs.room.compiler)
 }

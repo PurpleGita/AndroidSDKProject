@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,10 +29,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CreateMenuItemActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final String TAG = "CreateMenuItemActivity";
+    private static final AtomicInteger ID_GENERATOR = new AtomicInteger(1); // Added ID generator
 
     private CheckBox isFoodCheckBox;
     private EditText itemNameEditText;
@@ -45,6 +49,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
     private Button createItemButton;
 
     private byte[] imageByteArray;
+    private String itemImageUriString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +86,9 @@ public class CreateMenuItemActivity extends AppCompatActivity {
                 List<Object> allergies = new ArrayList<>();
                 allergies.add(itemAllergiesEditText.getText().toString());
 
-                MenuItem menuItem = new MenuItem(0, isFood, name, price, currency, imageByteArray, taste, effect, allergies);
+                int id = ID_GENERATOR.getAndIncrement(); // Generate unique ID
+                MenuItem menuItem = new MenuItem(id, isFood, name, price, currency, imageByteArray, taste, effect, allergies);
+                Log.d(TAG, "Creating MenuItem: " + menuItem.getName() + " with ID: " + menuItem.getId());
                 sendMenuItemToServer(menuItem);
             }
         });
@@ -103,6 +110,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 itemImageView.setImageBitmap(bitmap);
                 imageByteArray = convertBitmapToByteArray(bitmap);
+                itemImageUriString = imageUri.toString();
             } catch (IOException e) {
                 e.printStackTrace();
             }

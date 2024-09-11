@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
+    private static final String TAG = "MenuItemAdapter";
     private List<MenuItem> menuItems;
     private ShoppingCart shoppingCart;
     private Context context;
@@ -27,14 +29,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MenuItem menuItem = menuItems.get(position);
         holder.itemName.setText(menuItem.getName());
         holder.itemPrice.setText(menuItem.getPrice() + " " + menuItem.getCurrency());
@@ -47,7 +50,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
         holder.itemImage.setOnClickListener(v -> {
             Intent intent = new Intent(context, ItemDetailActivity.class);
-            intent.putExtra("menuItem", (Serializable) menuItem);
+            intent.putExtra("itemId", menuItem.getId());
             context.startActivity(intent);
         });
     }
@@ -55,6 +58,18 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public int getItemCount() {
         return menuItems.size();
+    }
+
+    public void updateMenuItems(List<MenuItem> newMenuItems) {
+        this.menuItems = newMenuItems;
+        notifyDataSetChanged();
+    }
+
+    public static int calculateSpanCount(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
+        int columnWidthDp = 180; // You can change this value to adjust the column width
+        return Math.max(1, (int) (screenWidthDp / columnWidthDp));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,17 +85,5 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             itemImage = itemView.findViewById(R.id.itemImage);
             addToCartButton = itemView.findViewById(R.id.addToCartButton);
         }
-    }
-
-    public void updateMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
-        notifyDataSetChanged();
-    }
-
-    public static int calculateSpanCount(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
-        int itemWidthDp = 180; // Assume each item is 180dp wide
-        return Math.max(2, (int) (screenWidthDp / itemWidthDp));
     }
 }

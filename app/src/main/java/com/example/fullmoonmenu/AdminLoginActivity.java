@@ -46,7 +46,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     private void checkIfAdminExists(String username, String password) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.1.139:8080/adminlogins/checkIfAdminExists");
+                URL url = new URL("http://192.168.0.183:8080/adminlogins/checkIfAdminExists");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json; utf-8");
