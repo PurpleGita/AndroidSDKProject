@@ -53,8 +53,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         fetchMenuItem(itemId, menuItem -> {
             runOnUiThread(() -> {
                 itemName.setText(menuItem.getName());
-                itemPrice.setText(String.valueOf(menuItem.getPrice()));
-                itemCurrency.setText(menuItem.getCurrency());
+                itemPrice.setText(String.valueOf(menuItem.getPrice())+menuItem.getCurrency());
                 itemTaste.setText(menuItem.getTaste());
                 itemEffect.setText(menuItem.getEffect());
                 itemImage.setImageBitmap(BitmapFactory.decodeByteArray(menuItem.getImage(), 0, menuItem.getImage().length));
@@ -70,7 +69,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private void fetchMenuItem(int itemId, MenuItemCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.0.183:8080/items/" + itemId);
+                URL url = new URL("http://192.168.1.139:8080/items/" + itemId);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

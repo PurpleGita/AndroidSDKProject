@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/full_moon_background"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,12 +14,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingTop="55dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/viewCartButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +34,8 @@
         android:text="Show All"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toEndOf="@id/showDrinksButton"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/showFoodButton"
@@ -40,7 +44,8 @@
         android:text="Show Food"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/showDrinksButton"
@@ -49,7 +54,8 @@
         android:text="Show Drinks"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toEndOf="@id/showFoodButton"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:visibility="gone" />
 
 
     <Button
@@ -60,6 +66,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

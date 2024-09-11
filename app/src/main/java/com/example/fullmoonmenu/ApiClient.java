@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class ApiClient {
 
-    private static final String API_URL = "http://192.168.0.183:8080/items";
+    private static final String API_URL = "http://192.168.1.139:8080/items";
     private static final String TAG = "ApiClient";
 
     public static List<MenuItem> fetchMenuItems() {

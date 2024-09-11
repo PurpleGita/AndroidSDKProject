@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,16 +32,25 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MenuItemAdapter adapter;
     private List<com.example.fullmoonmenu.MenuItem> menuItemList;
+    private Button showFoodButton;
+    private Button showDrinksButton;
+    private Button showAllButton;
+    private Button viewCartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // Ensure this references the correct layout resource
+        setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Full Moons 'n' Meals");
+
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        //getSupportActionBar().setTitle("Full Moons 'n' Meals");
+        //getSupportActionBar().setLogo(R.drawable.fullmoonlogo);
 
         ShoppingCart shoppingCart = ShoppingCart.getInstance();
 
@@ -71,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MenuItemAdapter(new ArrayList<>(), shoppingCart, this);
         recyclerView.setAdapter(adapter);
 
-        Button viewCartButton = findViewById(R.id.viewCartButton);
+        viewCartButton = findViewById(R.id.viewCartButton);
         viewCartButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
             startActivity(intent);
         });
 
-        Button showFoodButton = findViewById(R.id.showFoodButton);
-        Button showDrinksButton = findViewById(R.id.showDrinksButton);
-        Button showAllButton = findViewById(R.id.showAllButton);
+        showFoodButton = findViewById(R.id.showFoodButton);
+        showDrinksButton = findViewById(R.id.showDrinksButton);
+        showAllButton = findViewById(R.id.showAllButton);
 
         showFoodButton.setOnClickListener(v -> filterMenuItems(true));
         showDrinksButton.setOnClickListener(v -> filterMenuItems(false));
@@ -123,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "fetchAndDisplayMenuItems: Menu items fetched, count=" + menuItems.size());
                 runOnUiThread(() -> {
                     adapter.updateMenuItems(menuItems);
+                    showFilterButtons();
                 });
             } catch (Exception e) {
                 Log.e(TAG, "fetchAndDisplayMenuItems: Error fetching menu items", e);
@@ -135,5 +146,12 @@ public class MainActivity extends AppCompatActivity {
                 .filter(menuItem -> menuItem.isFood() == isFood)
                 .collect(Collectors.toList());
         adapter.updateMenuItems(filteredItems);
+    }
+
+    private void showFilterButtons() {
+        showFoodButton.setVisibility(View.VISIBLE);
+        showDrinksButton.setVisibility(View.VISIBLE);
+        showAllButton.setVisibility(View.VISIBLE);
+        viewCartButton.setVisibility(View.VISIBLE);
     }
 }

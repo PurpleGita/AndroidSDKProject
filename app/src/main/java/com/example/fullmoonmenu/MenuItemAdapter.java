@@ -68,7 +68,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public static int calculateSpanCount(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
-        int columnWidthDp = 180; // You can change this value to adjust the column width
+        int columnWidthDp = 160; // You can change this value to adjust the column width
         return Math.max(1, (int) (screenWidthDp / columnWidthDp));
     }
 

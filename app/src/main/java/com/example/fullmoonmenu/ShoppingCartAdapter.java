@@ -35,7 +35,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MenuItem item = items.get(position);
         holder.itemName.setText(item.getName());
-        holder.itemPrice.setText(String.valueOf(item.getPrice()));
+        holder.itemPrice.setText(String.valueOf(item.getPrice())+ String.valueOf(item.getCurrency()));
 
         holder.removeFromCartButton.setOnClickListener(v -> {
             synchronized (items) {
