@@ -128,6 +128,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
         return stream.toByteArray();
     }
 
+    //s
     // Method to send the created menu item to the server
     private void sendMenuItemToServer(MenuItem menuItem) {
         new Thread(() -> {
