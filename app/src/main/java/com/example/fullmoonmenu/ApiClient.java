@@ -13,16 +13,21 @@ import android.util.Log;
 
 public class ApiClient {
 
-    private static final String API_URL = "http://192.168.1.139:8080/items";
+    private static final String API_URL = "http://192.168.0.183:8080/items";
     private static final String TAG = "ApiClient";
 
+    // Method to fetch menu items from the server
     public static List<MenuItem> fetchMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
         try {
+            // Create a URL object with the API URL
             URL url = new URL(API_URL);
+            // Open a connection to the URL
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            // Set the request method to GET
             connection.setRequestMethod("GET");
 
+            // Read the response from the server
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -31,12 +36,15 @@ public class ApiClient {
             }
             reader.close();
 
+            // Parse the response JSON array
             JSONArray jsonArray = new JSONArray(response.toString());
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                // Decode the image from Base64
                 String imageBase64 = jsonObject.getString("image");
                 byte[] imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
                 Log.d(TAG, "fetchMenuItems: Decoded image bytes for item: " + jsonObject.getString("name"));
+                // Create a MenuItem object and add it to the list
                 MenuItem menuItem = new MenuItem(
                         jsonObject.getInt("id"),
                         jsonObject.getBoolean("isFood"),
@@ -51,6 +59,7 @@ public class ApiClient {
                 menuItems.add(menuItem);
             }
         } catch (Exception e) {
+            // Log any errors that occur during the fetch
             Log.e(TAG, "fetchMenuItems: Error fetching menu items", e);
         }
         return menuItems;

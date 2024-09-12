@@ -26,6 +26,7 @@ public class MenuItem implements Serializable {
     private String effect;
     private List<Object> allergies;
 
+    // Constructor to initialize all fields of the MenuItem class
     public MenuItem(int id, boolean isFood, String name, int price, String currency, byte[] image, String taste, String effect, List<Object> allergies) {
         this.id = id;
         this.isFood = isFood;
@@ -38,42 +39,52 @@ public class MenuItem implements Serializable {
         this.allergies = allergies;
     }
 
+    // Getter method for the id field
     public int getId() {
         return id;
     }
 
+    // Getter method for the isFood field
     public boolean isFood() {
         return isFood;
     }
 
+    // Getter method for the name field
     public String getName() {
         return name;
     }
 
+    // Getter method for the price field
     public int getPrice() {
         return price;
     }
 
+    // Getter method for the currency field
     public String getCurrency() {
         return currency;
     }
 
+    // Getter method for the image field
     public byte[] getImage() {
         return image;
     }
 
+    // Getter method for the taste field
     public String getTaste() {
         return taste;
     }
 
+    // Getter method for the effect field
     public String getEffect() {
         return effect;
     }
 
+    // Getter method for the allergies field
     public List<Object> getAllergies() {
         return allergies;
     }
 
+    // Method to convert the MenuItem object to a JSON string
     public String toJson() {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -93,6 +104,7 @@ public class MenuItem implements Serializable {
         return jsonObject.toString();
     }
 
+    // Static method to create a MenuItem object from a JSON string
     public static MenuItem fromJson(String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -104,7 +116,6 @@ public class MenuItem implements Serializable {
             byte[] image = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
             String taste = jsonObject.getString("taste");
             String effect = jsonObject.getString("effect");
-            String imageUri = jsonObject.getString("imageUri");
             JSONArray allergiesArray = jsonObject.getJSONArray("allergies");
             List<Object> allergies = new ArrayList<>();
             for (int i = 0; i < allergiesArray.length(); i++) {

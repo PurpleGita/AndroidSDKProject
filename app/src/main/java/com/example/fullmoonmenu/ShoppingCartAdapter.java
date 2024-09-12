@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     private List<MenuItem> items;
     private ShoppingCart shoppingCart;
 
+    // Constructor to initialize the adapter with items and shopping cart
     public ShoppingCartAdapter(List<MenuItem> items, ShoppingCart shoppingCart) {
         this.items = items;
         this.shoppingCart = shoppingCart;
@@ -26,17 +28,23 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
     @NonNull
     @Override
+    // Method to create new ViewHolder instances
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the layout for each shopping cart item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_cart, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
+    // Method to bind data to the ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Get the item at the given position
         MenuItem item = items.get(position);
+        // Set the item name and price
         holder.itemName.setText(item.getName());
-        holder.itemPrice.setText(String.valueOf(item.getPrice())+ String.valueOf(item.getCurrency()));
+        holder.itemPrice.setText(String.valueOf(item.getPrice()) + "-" + String.valueOf(item.getCurrency()));
 
+        // Set click listener for the remove from cart button
         holder.removeFromCartButton.setOnClickListener(v -> {
             synchronized (items) {
                 int pos = holder.getAdapterPosition();
@@ -52,10 +60,12 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     }
 
     @Override
+    // Method to get the total number of items in the shopping cart
     public int getItemCount() {
         return items.size();
     }
 
+    // Method to update the list of items and refresh the RecyclerView
     public void updateItems(List<MenuItem> newItems) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
@@ -83,11 +93,13 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         diffResult.dispatchUpdatesTo(this);
     }
 
+    // ViewHolder class to hold references to the UI components for each shopping cart item
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemName;
         public TextView itemPrice;
-        public Button removeFromCartButton;
+        public ImageButton removeFromCartButton;
 
+        // Constructor to initialize the UI components
         public ViewHolder(View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);

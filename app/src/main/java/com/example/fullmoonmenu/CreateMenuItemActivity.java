@@ -56,6 +56,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_menu_item);
 
+        // Initialize UI components
         isFoodCheckBox = findViewById(R.id.isFoodCheckBox);
         itemNameEditText = findViewById(R.id.itemNameEditText);
         itemPriceEditText = findViewById(R.id.itemPriceEditText);
@@ -67,6 +68,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
         selectImageButton = findViewById(R.id.selectImageButton);
         createItemButton = findViewById(R.id.createItemButton);
 
+        // Set click listener for the select image button
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +76,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
             }
         });
 
+        // Set click listener for the create item button
         createItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +97,7 @@ public class CreateMenuItemActivity extends AppCompatActivity {
         });
     }
 
+    // Method to open the image chooser
     private void openImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -117,16 +121,18 @@ public class CreateMenuItemActivity extends AppCompatActivity {
         }
     }
 
+    // Method to convert a Bitmap to a byte array
     private byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
 
+    // Method to send the created menu item to the server
     private void sendMenuItemToServer(MenuItem menuItem) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.1.139:8080/items");
+                URL url = new URL("http://192.168.0.183:8080/items");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json; utf-8");

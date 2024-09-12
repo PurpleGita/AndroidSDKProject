@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
-        //getSupportActionBar().setTitle("Full Moons 'n' Meals");
-        //getSupportActionBar().setLogo(R.drawable.fullmoonlogo);
 
         ShoppingCart shoppingCart = ShoppingCart.getInstance();
 
@@ -100,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the XML resource
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         Log.d(TAG, "onCreateOptionsMenu: Menu created");
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle menu item selections
         int id = item.getItemId();
         Log.d(TAG, "onOptionsItemSelected: Menu item selected, id=" + id);
         if (id == R.id.action_menu) {
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchAndDisplayMenuItems() {
+        // Fetch menu items from the server and update the UI
         Log.d(TAG, "fetchAndDisplayMenuItems: Fetching menu items");
         new Thread(() -> {
             try {
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void filterMenuItems(boolean isFood) {
+        // Filter the menu items based on whether they are food or drinks
         List<com.example.fullmoonmenu.MenuItem> filteredItems = menuItemList.stream()
                 .filter(menuItem -> menuItem.isFood() == isFood)
                 .collect(Collectors.toList());
@@ -149,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFilterButtons() {
+        // Show the filter buttons on the UI
         showFoodButton.setVisibility(View.VISIBLE);
         showDrinksButton.setVisibility(View.VISIBLE);
         showAllButton.setVisibility(View.VISIBLE);

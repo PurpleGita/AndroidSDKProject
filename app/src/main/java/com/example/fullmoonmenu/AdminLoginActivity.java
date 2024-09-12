@@ -29,10 +29,12 @@ public class AdminLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
+        // Initialize UI components
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
 
+        // Set click listener for the login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,25 +45,29 @@ public class AdminLoginActivity extends AppCompatActivity {
         });
     }
 
+    // Method to check if the admin exists by sending a POST request to the server
     private void checkIfAdminExists(String username, String password) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.1.139:8080/adminlogins/checkIfAdminExists");
+                URL url = new URL("http://192.168.0.183:8080/adminlogins/checkIfAdminExists");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json; utf-8");
                 conn.setRequestProperty("Accept", "application/json");
                 conn.setDoOutput(true);
 
+                // Create JSON object with username and password
                 JSONObject jsonInput = new JSONObject();
                 jsonInput.put("username", username);
                 jsonInput.put("password", password);
 
+                // Send JSON input to the server
                 try (OutputStream os = conn.getOutputStream()) {
                     byte[] input = jsonInput.toString().getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
 
+                // Get the response code from the server
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -72,9 +78,11 @@ public class AdminLoginActivity extends AppCompatActivity {
                     }
                     in.close();
 
+                    // Parse the response to check if login was successful
                     String responseString = response.toString();
                     boolean loginSuccess = Boolean.parseBoolean(responseString);
 
+                    // Update UI based on login success or failure
                     runOnUiThread(() -> {
                         if (loginSuccess) {
                             Toast.makeText(AdminLoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
